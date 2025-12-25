@@ -51,7 +51,14 @@ All exported documents are saved to the `downloads/` directory by default. This 
 | Plain Text | .txt | `-t txt` |
 | HTML | .html | `-t html` |
 | EPUB | .epub | `-t epub` |
-| Markdown | .md | `-t md` |
+| Markdown | .md | `-t md` or `-t markdown` |
+
+## Interactive Selection
+
+When multiple documents match your query, you'll be prompted to:
+- Enter a number to export a specific document
+- Enter `all` to export all matching documents
+- Enter `q` to quit
 
 ## Setup
 
@@ -102,3 +109,13 @@ go build -o gdoc2doc.exe .
 ## Free Model
 
 Uses `ServiceNow-AI/Apriel-1.6-15b-Thinker` (free usage tier on Together AI).
+
+## Key Assumptions
+
+1. **Google Docs Only**: Only exports Google Docs (not Sheets, Slides, or other formats)
+2. **Trashed Excluded**: Documents in trash are automatically excluded from listing
+3. **OAuth Token Format**: The `GOOGLE-DOCS_JWT_KEY` environment variable expects JSON with:
+   - `token`, `refresh_token`, `token_uri`, `client_id`, `client_secret`, `scopes`
+4. **Filename Sanitization**: Invalid filename characters (`\ / : * ? " < > |`) are replaced with underscores
+5. **Flexible Matching**: AI-filtered document names match via case-insensitive exact match or contains
+6. **Go 1.21+**: Requires Go 1.21 or higher (uses `golang.org/x/oauth2` and `google.golang.org/api`)
