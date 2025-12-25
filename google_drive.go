@@ -33,18 +33,6 @@ var ExportFormats = map[string]ExportFormat{
 	"markdown": {MimeType: "text/markdown", Extension: ".md"},
 }
 
-// GetSupportedFormats returns a list of supported format names
-func GetSupportedFormats() []string {
-	formats := make([]string, 0, len(ExportFormats))
-	seen := make(map[string]bool)
-	for name, format := range ExportFormats {
-		if !seen[format.Extension] {
-			formats = append(formats, name)
-			seen[format.Extension] = true
-		}
-	}
-	return formats
-}
 
 // GoogleDocument represents a Google Doc with its metadata
 type GoogleDocument struct {
@@ -108,15 +96,10 @@ func (client *DriveClient) ListGoogleDocs() ([]GoogleDocument, error) {
 		}
 
 		for _, file := range response.Files {
-			description := ""
-			if file.Description != "" {
-				description = file.Description
-			}
-
 			documents = append(documents, GoogleDocument{
 				ID:          file.Id,
 				Name:        file.Name,
-				Description: description,
+				Description: file.Description,
 				ModifiedAt:  file.ModifiedTime,
 				CreatedAt:   file.CreatedTime,
 			})

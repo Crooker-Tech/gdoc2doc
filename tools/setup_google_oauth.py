@@ -1,12 +1,12 @@
 """
-Setup Google OAuth credentials for gdoc2pdf.
+Setup Google OAuth credentials for gdoc2doc.
 
 This script handles the OAuth flow for Google Drive/Docs API access.
 Run this once to authorize the application and store tokens.
 
 Usage:
     1. Load the OAuth client secret:
-       . .\\tools\\load-key.ps1 -Service gdoc2pdf-oauth -Target API
+       . .\\tools\\load-key.ps1 -Service gdoc2doc-oauth -Target API
     2. Run: python tools/setup_google_oauth.py
 """
 import io
@@ -57,13 +57,13 @@ CLIENT_CONFIG = {
 
 def load_client_secret() -> str:
     """Load OAuth client secret from environment variable."""
-    # Environment variable set by: . .\tools\load-key.ps1 -Service gdoc2pdf-oauth -Target API
-    secret = os.environ.get('GDOC2PDF-OAUTH_API_KEY')
+    # Environment variable set by: . .\tools\load-key.ps1 -Service gdoc2doc-oauth -Target API
+    secret = os.environ.get('GDOC2DOC-OAUTH_API_KEY')
     if not secret:
-        print("Error: GDOC2PDF-OAUTH_API_KEY not set")
+        print("Error: GDOC2DOC-OAUTH_API_KEY not set")
         print()
         print("Run this first:")
-        print("  . .\\tools\\load-key.ps1 -Service gdoc2pdf-oauth -Target API")
+        print("  . .\\tools\\load-key.ps1 -Service gdoc2doc-oauth -Target API")
         sys.exit(1)
     return secret
 
@@ -102,7 +102,7 @@ def setup_oauth(output_path: Path) -> dict:
 
     print(f"Token saved to: {output_path}")
     print()
-    print("You can now run gdoc2pdf!")
+    print("You can now run gdoc2doc!")
 
     return token_data
 

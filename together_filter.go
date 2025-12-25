@@ -133,12 +133,12 @@ Matching documents:`, documentList.String(), query)
 		// Remove any bullet points or numbering
 		cleaned = strings.TrimPrefix(cleaned, "- ")
 		cleaned = strings.TrimPrefix(cleaned, "* ")
-		// Remove numbered prefixes like "1. "
-		if len(cleaned) > 3 && cleaned[1] == '.' && cleaned[2] == ' ' {
-			cleaned = cleaned[3:]
-		}
-		if len(cleaned) > 4 && cleaned[2] == '.' && cleaned[3] == ' ' {
-			cleaned = cleaned[4:]
+		// Remove numbered prefixes like "1. " or "12. "
+		if dotIndex := strings.Index(cleaned, ". "); dotIndex > 0 && dotIndex <= 3 {
+			possibleNumber := cleaned[:dotIndex]
+			if _, err := fmt.Sscanf(possibleNumber, "%d", new(int)); err == nil {
+				cleaned = cleaned[dotIndex+2:]
+			}
 		}
 		cleaned = strings.TrimSpace(cleaned)
 
