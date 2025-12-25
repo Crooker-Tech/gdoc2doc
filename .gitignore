@@ -1,0 +1,14 @@
+# Downloaded documents
+downloads/
+
+# OAuth tokens (contain secrets)
+token.json
+credentials.json
+
+# Binaries
+*.exe
+gdoc2doc
+gdoc2pdf
+
+# Go build cache
+go.sum
